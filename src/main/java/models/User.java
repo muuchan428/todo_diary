@@ -22,7 +22,17 @@ import lombok.Setter;
  *
  */
 @Table(name = JpaConst.TABLE_USR)
-
+@NamedQueries({
+    @NamedQuery(
+            name = JpaConst.Q_USR_GET_ALL,
+            query = JpaConst.Q_USR_GET_ALL_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_USR_GET_BY_CODE_AND_PASS,
+            query = JpaConst.Q_USR_GET_BY_CODE_AND_PASS_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_USR_GET_BY_ID,
+            query = JpaConst.Q_USR_GET_BY_ID_DEF)
+})
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)
@@ -69,10 +79,6 @@ public class User {
     @Column(name = JpaConst.USR_COL_UPDATED_AT, nullable = false)
     private LocalDateTime updatedAt;
 
-    /**
-     * 削除されたユーザーかどうか（現役：0、削除済み：1）
-     */
-    @Column(name = JpaConst.USR_COL_DELETE_FLAG, nullable = false)
-    private Integer deleteFlag;
+
 
 }

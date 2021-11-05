@@ -63,7 +63,24 @@ public interface JpaConst {
 
 
         //JPQL内パラメータ
-
+        String JPQL_PARM_USER = "user";
+        String JPQL_PARM_PASSWORD = "password";
+        String JPQL_PARM_USR_ID = "userId";
 
         //NamedQueryの nameとquery
+
+        //ユーザーIDとハッシュ化済パスワードを条件に未削除のユーザーを取得する
+        String Q_USR_GET_BY_CODE_AND_PASS = ENTITY_USR + ".getByUserIdAndPass";
+        String Q_USR_GET_BY_CODE_AND_PASS_DEF = "SELECT u FROM User AS u WHERE u.userId = :" + JPQL_PARM_USR_ID + " AND u.password = :" + JPQL_PARM_PASSWORD;
+      //全てのユーザーをidの降順に取得する
+        String Q_USR_GET_ALL = ENTITY_USR + ".getAll"; //name
+        String Q_USR_GET_ALL_DEF = "SELECT u FROM User AS u ORDER BY u.id DESC"; //query
+
+        //指定したユーザーIDを保持するユーザーの件数を取得する
+        String Q_USR_COUNT_RESISTERED_BY_CODE = ENTITY_USR + ".countRegisteredByCode";
+        String Q_USR_COUNT_RESISTERED_BY_CODE_DEF = "SELECT COUNT(u) FROM User AS u WHERE u.userId = :" + JPQL_PARM_USR_ID;
+
+        //指定したidを保持するユーザーの情報を取得する
+        String Q_USR_GET_BY_ID = ENTITY_USR + "getById";
+        String Q_USR_GET_BY_ID_DEF = "SELECT u FROM User AS u WHERE u.id = : " + JPQL_PARM_USER;
 }

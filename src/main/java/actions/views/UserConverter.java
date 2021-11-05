@@ -1,4 +1,4 @@
-package views;
+package actions.views;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +23,8 @@ public class UserConverter {
                 uv.getName(),
                 uv.getPassword(),
                 uv.getCreatedAt(),
-                uv.getUpdatedAt(),
-                uv.getDeleteFlag() == null
-                    ? null
-                            : uv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()
-                            ? JpaConst.USR_DEL_TRUE
-                            : JpaConst.USR_DEL_FALSE);
+                uv.getUpdatedAt()
+                );
 
     }
     /**
@@ -48,12 +44,8 @@ public class UserConverter {
                 u.getName(),
                 u.getPassword(),
                 u.getCreatedAt(),
-                u.getUpdatedAt(),
-                u.getDeleteFlag() == null
-                        ? null
-                        : u.getDeleteFlag() == JpaConst.USR_DEL_TRUE
-                                ? AttributeConst.DEL_FLAG_TRUE.getIntegerValue()
-                                : AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+                u.getUpdatedAt()
+                );
     }
 
     /**
@@ -84,7 +76,7 @@ public class UserConverter {
         u.setPassword(uv.getPassword());
         u.setCreatedAt(uv.getCreatedAt());
         u.setUpdatedAt(uv.getUpdatedAt());
-        u.setDeleteFlag(uv.getDeleteFlag());
+
 
     }
 
