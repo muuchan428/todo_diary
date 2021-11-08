@@ -82,8 +82,8 @@ public interface JpaConst {
 
         //Diary
        //ログイン中のユーザーの全ての日記をidの降順に取得する
-        String Q_DIA_GET_ALL = ENTITY_DIA + ".getAll";
-        String Q_DIA_GET_ALL_DEF = "SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + "ORDER BY d.id DESC";
+        String Q_DIA_GET_ALL_MINE = ENTITY_DIA + ".getAll";
+        String Q_DIA_GET_ALL_MINE_DEF = "SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + "ORDER BY d.id DESC";
       //ログイン中のユーザーの全ての日報の件数を取得する
         String Q_DIA_COUNT = ENTITY_DIA + ".count";
         String Q_DIA_COUNT_DEF = "SELECT COUNT(d) FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER;
