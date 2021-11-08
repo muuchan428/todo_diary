@@ -31,7 +31,11 @@ import lombok.Setter;
             query = JpaConst.Q_USR_GET_BY_CODE_AND_PASS_DEF),
     @NamedQuery(
             name = JpaConst.Q_USR_GET_BY_ID,
-            query = JpaConst.Q_USR_GET_BY_ID_DEF)
+            query = JpaConst.Q_USR_GET_BY_ID_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_USR_COUNT_RESISTERED_BY_CODE,
+            query = JpaConst.Q_USR_COUNT_RESISTERED_BY_CODE_DEF)
+
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)

@@ -20,7 +20,7 @@ public enum AttributeConst {
     ERR("errors"),
 
     //ログイン中のユーザー
-    LOGIN_EMP("login_user"),
+    LOGIN_USR("login_user"),
 
     //ログイン画面
     LOGIN_ERR("loginError"),
@@ -32,7 +32,7 @@ public enum AttributeConst {
     USR_ID("id"),
     USR_USR_ID("user_id"),
     USR_PASS("password"),
-    USRNAME("name"),
+    USR_NAME("name"),
 
     //削除フラグ
     DEL_FLAG_TRUE(1),
