@@ -34,7 +34,7 @@ public class TopAction extends ActionBase {
 
 
 
-        //セッションからログイン中の従業員情報を取得
+        //セッションからログイン中のユーザー情報を取得
        UserView loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USR);
 
 

@@ -4,13 +4,15 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="action" value="${ForwardConst.ACT_AUTH.getValue()}" />
+<c:set var="actUsr" value="${ForwardConst.ACT_USR.getValue()}" />
 <c:set var="command" value="${ForwardConst.CMD_LOGIN.getValue()}" />
+<c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
-        <c:if test="${loginError}">
+        <c:if test="${loginError != null}">
             <div id="flush_error">
-                ユーザーIDまたはパスワードが間違っています。
+              <c:out value="${loginError}"></c:out>
             </div>
         </c:if>
         <c:if test="${flush != null}">
@@ -31,5 +33,9 @@
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
             <button type="submit">ログイン</button>
         </form>
+        <p>―――――――――――――――――
+    <div id="signIn">
+        <h2><a href="<c:url value='?action=${actUsr}&command=${commNew}'/>">SIGN IN</a></h2>
+        </div>
     </c:param>
 </c:import>

@@ -153,10 +153,10 @@ summary {
     font-size:25px;
 }
 
-#header #content_parent{
+#content_parent{
         text-align: center;
 }
-#header #content{
+#content{
     width:60%;
     text-align: center;
     display:inline-block;

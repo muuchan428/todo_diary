@@ -60,17 +60,20 @@ public class LoginFilter implements Filter {
 
             if (uv == null) {
                 //未ログイン
+                if(!(ForwardConst.ACT_USR.getValue().equals(action)
+                                &&(ForwardConst.CMD_NEW.getValue().equals(command)
+                                        || ForwardConst.CMD_CREATE.getValue().equals(command)))) {
+                    if (!(ForwardConst.ACT_AUTH.getValue().equals(action)
+                            && (ForwardConst.CMD_SHOW_LOGIN.getValue().equals(command)
+                                    || ForwardConst.CMD_LOGIN.getValue().equals(command)))) {
 
-                if (!(ForwardConst.ACT_AUTH.getValue().equals(action)
-                        && (ForwardConst.CMD_SHOW_LOGIN.getValue().equals(command)
-                                || ForwardConst.CMD_LOGIN.getValue().equals(command)))) {
-
-                    //ログインページの表示またはログイン実行以外はログインページにリダイレクト
-                    ((HttpServletResponse) response).sendRedirect(
-                            contextPath
-                                    + "?action=" + ForwardConst.ACT_AUTH.getValue()
-                                    + "&command=" + ForwardConst.CMD_SHOW_LOGIN.getValue());
-                    return;
+                        //ログインページの表示またはログイン実行以外はログインページにリダイレクト
+                        ((HttpServletResponse) response).sendRedirect(
+                                contextPath
+                                + "?action=" + ForwardConst.ACT_AUTH.getValue()
+                                + "&command=" + ForwardConst.CMD_SHOW_LOGIN.getValue());
+                        return;
+                    }
                 }
             } else {
                 //ログイン済

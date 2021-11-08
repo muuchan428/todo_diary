@@ -108,6 +108,7 @@ public class UserService extends ServiceBase {
             validateCode = true;
             //変更後のユーザーIDを設定する
             savedUsr.setUserId(uv.getUserId());
+
         }
 
         boolean validatePass = false;

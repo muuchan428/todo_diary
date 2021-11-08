@@ -4,8 +4,10 @@
 <%@ page import="constants.AttributeConst" %>
 
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
+<c:set var="actUsr" value="${ForwardConst.ACT_USR.getValue()}" />
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
 <!DOCTYPE html>
 <html lang="ja">
@@ -13,7 +15,7 @@
 <meta charset="UTF-8">
     <title><c:out value="todo diary" /></title>
     <link rel="stylesheet" href="<c:url value='/css/reset.css' />">
-    <link rel="stylesheet" href="<c:url value='/css/style.css?v=2' />">
+    <link rel="stylesheet" href="<c:url value='/css/style.css?v=2' />">　
 </head>
 <body>
    <div id="header">
@@ -30,21 +32,22 @@
                     <span class="close">CLOSE</span>
                 </summary>
                 <div id="menu_content">
-                    <a href="<c:url value='?action=${actTop}&command=${commIdx}' />">HOME</a>
+                    <li><a href="<c:url value='?action=${actTop}&command=${commIdx}' />">HOME</a></li>
                     <li>NEW DIARY</li>
                     <li>CALENDAR</li>
-                    <li>SETTING</li>
-                   <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">LOG OUT</a>
+                    <li><a href="<c:url value='?action=${actUsr}&command=${commShow}' />">SETTING</a></li>
+                  <li> <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">LOG OUT</a></li>
                 </div>
 
             </details>
 
             </div>
         </div>
+       </div>
         <div id="content_parent">
         <div id="content">${param.content}</div>
         </div>
         <div id="footer"></div>
-    </div>
+
 </body>
 </html>

@@ -76,7 +76,7 @@ public class AuthAction extends ActionBase {
 
             //CSRF対策 tokenのチェック
             if (checkToken()) {
-                System.out.println("login success");
+
                 //ログインした従業員のDBデータを取得
                 UserView uv = userService.findOne(userId, plainPass, pepper);
                 //セッションにログインした従業員を設定
@@ -92,7 +92,7 @@ public class AuthAction extends ActionBase {
             //CSRF対策用トークンを設定
             putRequestScope(AttributeConst.TOKEN, getTokenId());
             //認証失敗エラーメッセージ表示フラグをたてる
-            putRequestScope(AttributeConst.LOGIN_ERR, true);
+            putRequestScope(AttributeConst.LOGIN_ERR, "ログインIDかパスワードが間違っています。");
             //入力された従業員コードを設定
             putRequestScope(AttributeConst.USR_USR_ID, userId);
 
@@ -114,8 +114,8 @@ public class AuthAction extends ActionBase {
         //セッションにログアウト時のフラッシュメッセージを追加
         putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGOUT.getMessage());
 
-        //ログイン画面にリダイレクト
-        redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SHOW_LOGIN);
+        //ログイン画面を表示
+        forward(ForwardConst.FW_LOGIN);
 
     }
 
