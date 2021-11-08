@@ -21,12 +21,9 @@ public interface JpaConst {
         String USR_COL_PASS = "password";//パスワード
         String USR_COL_CREATED_AT = "created_at";//登録日時
         String USR_COL_UPDATED_AT = "update_at";//更新日時
-        String USR_COL_DELETE_FLAG = "delete_flag";//削除フラグ
 
 
 
-        int USR_DEL_TRUE = 1; //削除フラグON(削除済み)
-        int USR_DEL_FALSE = 0; //削除フラグOFF(現役)
 
 
         //日記テーブル
@@ -66,21 +63,32 @@ public interface JpaConst {
         String JPQL_PARM_USER = "user";
         String JPQL_PARM_PASSWORD = "password";
         String JPQL_PARM_USR_ID = "userId";
+        String JPQL_PARM_DIA_DATE = "diaryDate";
 
         //NamedQueryの nameとquery
-
+        //User
         //ユーザーIDとハッシュ化済パスワードを条件に未削除のユーザーを取得する
         String Q_USR_GET_BY_CODE_AND_PASS = ENTITY_USR + ".getByUserIdAndPass";
         String Q_USR_GET_BY_CODE_AND_PASS_DEF = "SELECT u FROM User AS u WHERE u.userId = :" + JPQL_PARM_USR_ID + " AND u.password = :" + JPQL_PARM_PASSWORD;
       //全てのユーザーをidの降順に取得する
         String Q_USR_GET_ALL = ENTITY_USR + ".getAll"; //name
         String Q_USR_GET_ALL_DEF = "SELECT u FROM User AS u ORDER BY u.id DESC"; //query
-
         //指定したユーザーIDを保持するユーザーの件数を取得する
         String Q_USR_COUNT_RESISTERED_BY_CODE = ENTITY_USR + ".countRegisteredByCode";
         String Q_USR_COUNT_RESISTERED_BY_CODE_DEF = "SELECT COUNT(u) FROM User AS u WHERE u.userId = :" + JPQL_PARM_USR_ID;
-
         //指定したidを保持するユーザーの情報を取得する
         String Q_USR_GET_BY_ID = ENTITY_USR + "getById";
         String Q_USR_GET_BY_ID_DEF = "SELECT u FROM User AS u WHERE u.id = : " + JPQL_PARM_USER;
+
+        //Diary
+       //ログイン中のユーザーの全ての日記をidの降順に取得する
+        String Q_DIA_GET_ALL = ENTITY_DIA + ".getAll";
+        String Q_DIA_GET_ALL_DEF = "SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + "ORDER BY d.id DESC";
+      //ログイン中のユーザーの全ての日報の件数を取得する
+        String Q_DIA_COUNT = ENTITY_DIA + ".count";
+        String Q_DIA_COUNT_DEF = "SELECT COUNT(d) FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER;
+       //ログイン中のユーザーの指定された日付の日記を取得する
+        String Q_DIA_GET_MINE_DATE = ENTITY_DIA + ".getDateMine";
+        String Q_DIA_GET_MINE_DATE_DEF ="SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.diaryDate = :" + JPQL_PARM_DIA_DATE + "ORDER BY d.id DESC";
+
 }
