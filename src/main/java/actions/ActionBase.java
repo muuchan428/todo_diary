@@ -135,6 +135,22 @@ public abstract class ActionBase {
         response.sendRedirect(redirectUrl);
 
     }
+    protected void redirect(ForwardConst action, ForwardConst command, LocalDate date)
+            throws ServletException, IOException {
+
+        //URLを構築
+        String redirectUrl = request.getContextPath() + "/?action=" + action.getValue();
+        if (command != null) {
+            redirectUrl = redirectUrl + "&command=" + command.getValue();
+        }
+        if (date != null) {
+            redirectUrl = redirectUrl + "&date=" + date;
+        }
+
+        //URLへリダイレクト
+        response.sendRedirect(redirectUrl);
+
+    }
 
     /**
      * CSRF対策 token不正の場合はエラー画面を表示
@@ -178,6 +194,13 @@ public abstract class ActionBase {
             page = 1;
         }
         return page;
+    }
+
+    protected LocalDate getDate() {
+        LocalDate date;
+        date = LocalDate.parse(request.getParameter(AttributeConst.DATE.getValue()));
+
+        return date;
     }
 
     /**

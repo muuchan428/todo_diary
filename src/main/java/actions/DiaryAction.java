@@ -5,13 +5,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
+
+
 import actions.views.DiaryView;
+
 import actions.views.UserView;
 import services.DiaryService;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import constants.PropertyConst;
 
 public class DiaryAction extends ActionBase {
 
@@ -42,7 +46,6 @@ public class DiaryAction extends ActionBase {
         List<LocalDate> dates = diaryService.getDates(loginUser, page);
         int dateCount = diaryService.getAllDate(loginUser);
 
-        System.out.print("index dateCount" +dateCount);
         putRequestScope(AttributeConst.DATES, dates);//日記が作成された日付のリスト
         putRequestScope(AttributeConst.DATE_COUNT, dateCount); //日記の作成された日付の件数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
@@ -103,6 +106,24 @@ public class DiaryAction extends ActionBase {
     forward(ForwardConst.FW_DIA_SHOW);
     }
 
+    public void edit() throws ServletException, IOException {
+
+        //セッションからログイン中の従業員情報を取得
+          loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USR);
+          //idを条件に日記データを取得
+          DiaryView diary = diaryService.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+          //日記を作成したユーザーかどうかをチェック
+        if(diary.getUser().getId() == loginUser.getId()) {
+
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+            putRequestScope(AttributeConst.DIARY, diary);//入力された日報情報
+
+            //詳細画面を表示
+            forward(ForwardConst.FW_DIA_EDIT);
+
+        }
+    }
+
     /**
      * 新規登録を行う
      * @throws ServletException
@@ -155,6 +176,46 @@ public class DiaryAction extends ActionBase {
 
                 //一覧画面にリダイレクト
                 redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_INDEX);
+            }
+        }
+    }
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void update() throws ServletException, IOException{
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //idを条件に日記データを取得する
+            DiaryView dv = diaryService.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+
+            //入力された日記内容を設定する
+            dv.setDiaryDate(toLocalDate(getRequestParam(AttributeConst.DIA_DATE)));
+            dv.setContent(getRequestParam(AttributeConst.DIA_CONTENT));
+
+            //日記データを更新する
+            List<String> errors = diaryService.update(dv);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.DIARY, dv); //入力された日報情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //編集画面を再表示
+                forward(ForwardConst.FW_DIA_EDIT);
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに更新完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_SHOW, dv.getDiaryDate());
+
             }
         }
     }

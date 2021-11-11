@@ -114,9 +114,8 @@ public class AuthAction extends ActionBase {
         //セッションにログアウト時のフラッシュメッセージを追加
         putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGOUT.getMessage());
 
-        //ログイン画面を表示
-        forward(ForwardConst.FW_LOGIN);
-
+        //ログイン画面にリダイレクト
+        redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SHOW_LOGIN);
     }
 
 }

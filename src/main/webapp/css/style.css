@@ -286,3 +286,23 @@ p.space {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+#diary_list .time{
+    width: 20%;
+}
+#diary_list .content{
+    width: 60%;
+}
+
+#diary_list th.option{
+    width: 10%;
+    text-align: center;
+    background:#abebb4;
+}
+
+#diary_list th.option a{
+    color: white;
+      font-size: 18px;
+   font-weight: 700;
+
+}

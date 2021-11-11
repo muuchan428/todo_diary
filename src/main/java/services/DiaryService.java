@@ -65,25 +65,25 @@ public class DiaryService extends ServiceBase {
         int max = page * JpaConst.ROW_PER_PAGE - 1;//ページに表示されるリスト要素の最終
         int mini = (page - 1) * JpaConst.ROW_PER_PAGE;//ページに表示されるリスト要素の初めの番号
         int size = dates.size();
-        System.out.println("page" + page + "max" + max + "mini" + mini);
+
         if(size > max) {//リストサイズがページ最大データ数より大きいとき
             for(int i = 0; i < JpaConst.ROW_PER_PAGE; i++) {
                 datesPerPage.add(dates.get(mini + i));
 
             }
-            System.out.println("max");
+
         } else if(size > mini && size <= max) {//ページ最小～最大データ数内の時
             for(int i = 0; i < (size % JpaConst.ROW_PER_PAGE); i++) {
                 datesPerPage.add(dates.get(mini + i));
 
             }
-            System.out.println("middle");
+
         }else {
-            System.out.println("mini");
+
             return null;
         }
 
-        System.out.println("public dates size" + datesPerPage.size());
+
         return datesPerPage;
 
     }
@@ -198,7 +198,6 @@ public class DiaryService extends ServiceBase {
                                                  .getResultList();
         System.out.println("private da size" +d.size());
         List<LocalDate> dates = new ArrayList<LocalDate>(new LinkedHashSet<>(d));
-        System.out.println("private dates size" + dates.size());
         return dates;
 
     }
