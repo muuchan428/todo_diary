@@ -1,7 +1,7 @@
 package models;
 
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -23,76 +23,76 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * 日記データのDTOモデル
+ * タスクデータのDTOモデル
  *
  */
-@Table(name = JpaConst.TABLE_DIA)
-@NamedQueries({
-    @NamedQuery(
-            name = JpaConst.Q_DIA_GET_ALL_MINE,
-            query = JpaConst.Q_DIA_GET_ALL_MINE_DEF),
-    @NamedQuery(
-            name = JpaConst.Q_DIA_COUNT,
-            query = JpaConst.Q_DIA_COUNT_DEF),
-    @NamedQuery(
-            name = JpaConst.Q_DIA_GET_DATE,
-            query = JpaConst.Q_DIA_GET_DATE_DEF),
-    @NamedQuery(
-            name = JpaConst.Q_DATES_GET_DIA,
-            query = JpaConst.Q_DATES_GET_DIA_DEF),
-   @NamedQuery(
-           name = JpaConst.Q_DIA_GET_BY_ID,
-           query = JpaConst.Q_DIA_GET_BY_ID_DEF)
-
-
-})
+@Table(name = JpaConst.TABLE_TSK)
+//@NamedQueries({
+//    @NamedQuery(
+//            name = JpaConst.Q_DIA_GET_ALL_MINE,
+//            query = JpaConst.Q_DIA_GET_ALL_MINE_DEF),
+//    @NamedQuery(
+//            name = JpaConst.Q_DIA_COUNT,
+//            query = JpaConst.Q_DIA_COUNT_DEF),
+//    @NamedQuery(
+//            name = JpaConst.Q_DIA_GET_DATE,
+//            query = JpaConst.Q_DIA_GET_DATE_DEF),
+//    @NamedQuery(
+//            name = JpaConst.Q_DATES_GET_DIA,
+//            query = JpaConst.Q_DATES_GET_DIA_DEF),
+//   @NamedQuery(
+//           name = JpaConst.Q_DIA_GET_BY_ID,
+//           query = JpaConst.Q_DIA_GET_BY_ID_DEF)
+//
+//
+//})
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)
 @NoArgsConstructor //引数なしコンストラクタを自動生成する(Lombok)
 @AllArgsConstructor //全てのクラスフィールドを引数にもつ引数ありコンストラクタを自動生成する(Lombok)
 @Entity
-public class Diary {
+public class Task {
 
     /**
      * id
      */
     @Id
-    @Column(name = JpaConst.DIA_COL_ID)
+    @Column(name = JpaConst.TSK_COL_ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * 日記を登録したユーザー
+     * タスクを登録したユーザー
      */
     @ManyToOne
-    @JoinColumn(name = JpaConst.DIA_COL_USR, nullable = false)
+    @JoinColumn(name = JpaConst.TSK_COL_USR, nullable = false)
     private User user;
 
-    /**
-     * いつの日記かを示す日付
-     */
-    @Column(name = JpaConst.DIA_COL_DIA_DATE, nullable = false)
-    private LocalDate diaryDate;
 
 
     /**
-     * 日記の内容
+     * タスクの内容
      */
     @Lob
-    @Column(name = JpaConst.DIA_COL_CONTENT, nullable = false)
+    @Column(name = JpaConst.TSK_COL_CONTENT, nullable = false)
     private String content;
 
     /**
      * 登録日時
      */
-    @Column(name = JpaConst.DIA_COL_CREATED_AT, nullable = false)
+    @Column(name = JpaConst.TSK_COL_CREATED_AT, nullable = false)
     private LocalDateTime createdAt;
 
     /**
-     * 更新日時
+     * 完了日時
      */
-    @Column(name = JpaConst.DIA_COL_UPDATED_AT, nullable = false)
-    private LocalDateTime updatedAt;
+    @Column(name = JpaConst.TSK_COL_FINISHED_AT, nullable = false)
+    private LocalDateTime finishedAt;
+    /**
+     * 完了フラグ
+     */
+    @Column(name = JpaConst.TSK_COL_FINISH_FLAG, nullable=false)
+    private Integer finishFlag;
 
 }

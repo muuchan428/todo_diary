@@ -43,7 +43,7 @@ public interface JpaConst {
         String TSK_COL_USR = "user_id";//タスクを作成した人のId
         String TSK_COL_CONTENT = "content";//タスクの内容
         String TSK_COL_CREATED_AT = "created_at";//登録日時
-        String TSL_COL_FINISHED_AT = "finished_at";//完了日時
+        String TSK_COL_FINISHED_AT = "finished_at";//完了日時
         String TSK_COL_FINISH_FLAG = "finish_flag";//完了フラグ
 
         int TSK_FIN_TRUE = 1; //完了フラグON(完了済み)
