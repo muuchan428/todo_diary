@@ -84,22 +84,7 @@ button {
     background-color: #f8d7da;
 }
 
-table#employee_list th {
-    width: 30%;
-    padding: 10px 2%;
-}
 
-table#employee_list td {
-    width: 29%;
-    padding: 10px 2%;
-}
-
-tr.row1 {
-        background-color: #f2f2f2;
-}
-tr.row0 {
-        background-color: #ffffff;
-}
 
 select {
     height: 30px;
@@ -107,6 +92,7 @@ select {
 
 #header_logo {
     color: white;
+      font-weight: 700;
     width: 40%;
     padding-left: 1%;
     text-align: left;
@@ -129,12 +115,13 @@ select {
 #header{
     width:100%;
     height:70px;
-    background-color:#98eba3;
+    background-color:#abebb4;
 
 }
 #menu_content{
     background-color: #999999ff;
     color: white;
+      font-weight: 700;
    width: 150px;
    display:inline-block;
    text-align: left;
@@ -148,6 +135,7 @@ details:not([open]) .close {
   display: none;
 }
 summary {
+      font-weight: 700;
     list-style:none;
     color: white;
     font-size:25px;
@@ -206,5 +194,95 @@ h3 {
     justify-content: space-between;
 }
 
+#dates_list  a{
+     background-color: #999999ff;
+     color: white;
+     padding: 5px;
+       display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 1em 2em;
+  width: 300px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 50vh;
 
 
+}
+.button02 a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 1em 2em;
+  width: 300px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: #cccccc;
+  border-radius: 50vh;
+}
+
+#dates_list a::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-top: 3px solid white;
+  border-right: 3px solid white;
+  transform: rotate(45deg);
+}
+
+#dates_list a:hover {
+  text-decoration: none;
+  background-color: #abebb4;
+}
+
+#pager #pagination {
+  text-align: center;
+}
+
+#pager #pagination li {
+  display: inline;
+  margin: 0 2px;
+  padding: 0;
+  display: inline-block;
+  background:#999999ff;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  position: relative;
+  border-radius: 10px;
+}
+
+
+#pager #pagination li a{
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+   font-weight: 700;
+  text-align: center;
+  display:table;
+  color: #fff;
+  text-decoration: none;
+}
+
+#pager #pagination li  a span{
+  display:table-cell;
+  vertical-align:middle;
+}
+
+#pager #pagination li  a:hover,
+#pager #pagination li  a.active{
+  color: #999999ff;
+  background: #abebb4;
+  border-radius: 10px;
+}
+p.space {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

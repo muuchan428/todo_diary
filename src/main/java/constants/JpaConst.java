@@ -11,7 +11,7 @@ public interface JpaConst {
         String PERSISTENCE_UNIT_NAME = "todo_diary";
 
         //データ取得件数の最大値
-        int ROW_PER_PAGE = 15; //1ページに表示するレコードの数
+        int ROW_PER_PAGE = 10; //1ページに表示するレコードの数
 
         //ユーザーテーブル
         String TABLE_USR = "users";//テーブル名
@@ -83,12 +83,15 @@ public interface JpaConst {
         //Diary
        //ログイン中のユーザーの全ての日記をidの降順に取得する
         String Q_DIA_GET_ALL_MINE = ENTITY_DIA + ".getAll";
-        String Q_DIA_GET_ALL_MINE_DEF = "SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + "ORDER BY d.id DESC";
+        String Q_DIA_GET_ALL_MINE_DEF = "SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " ORDER BY d.id DESC";
       //ログイン中のユーザーの全ての日報の件数を取得する
         String Q_DIA_COUNT = ENTITY_DIA + ".count";
         String Q_DIA_COUNT_DEF = "SELECT COUNT(d) FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER;
        //ログイン中のユーザーの指定された日付の日記を取得する
-        String Q_DIA_GET_MINE_DATE = ENTITY_DIA + ".getDateMine";
-        String Q_DIA_GET_MINE_DATE_DEF ="SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.diaryDate = :" + JPQL_PARM_DIA_DATE + "ORDER BY d.id DESC";
+        String Q_DIA_GET_DATE = ENTITY_DIA + ".getDate";
+        String Q_DIA_GET_DATE_DEF ="SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.diaryDate = :" + JPQL_PARM_DIA_DATE + " ORDER BY d.id DESC";
 
+        //ログイン中のユーザーが日記を作成した日付をすべて取得
+        String Q_DATES_GET_DIA = ENTITY_DIA + ".getDates";
+        String Q_DATES_GET_DIA_DEF = "SELECT d.diaryDate FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " ORDER BY d.diaryDate DESC";
 }

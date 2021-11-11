@@ -35,9 +35,11 @@ import lombok.Setter;
             name = JpaConst.Q_DIA_COUNT,
             query = JpaConst.Q_DIA_COUNT_DEF),
     @NamedQuery(
-            name = JpaConst.Q_DIA_GET_MINE_DATE,
-            query = JpaConst.Q_DIA_GET_MINE_DATE_DEF)
-
+            name = JpaConst.Q_DIA_GET_DATE,
+            query = JpaConst.Q_DIA_GET_DATE_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_DATES_GET_DIA,
+            query = JpaConst.Q_DATES_GET_DIA_DEF),
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)

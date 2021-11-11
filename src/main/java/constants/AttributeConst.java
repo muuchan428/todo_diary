@@ -13,7 +13,7 @@ public enum AttributeConst {
     //一覧画面共通
     MAX_ROW("maxRow"),
     PAGE("page"),
-    STO_PAGE("storePage"),
+    DATE("date"),
 
     //入力フォーム共通
     TOKEN("_token"),
@@ -45,6 +45,8 @@ public enum AttributeConst {
     DIA_ID("id"),
     DIA_DATE("diary_date"),
     DIA_CONTENT("content"),
+    DATES("dates"),
+    DATE_COUNT("dates_count"),
 
     //タスク管理
     TASK("follow"),

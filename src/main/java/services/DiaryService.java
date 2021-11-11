@@ -1,6 +1,9 @@
 package services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import actions.views.UserConverter;
@@ -22,12 +25,10 @@ public class DiaryService extends ServiceBase {
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<DiaryView> getMinePerPage(UserView user, int page) {
+    public List<DiaryView> getMinePerPage(UserView user) {
 
         List<Diary> diaries = em.createNamedQuery(JpaConst.Q_DIA_GET_ALL_MINE, Diary.class)
                 .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
-                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
-                .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
         return DiaryConverter.toViewList(diaries);
     }
@@ -52,6 +53,67 @@ public class DiaryService extends ServiceBase {
     public DiaryView findOne(int id) {
         return DiaryConverter.toView(findOneInternal(id));
     }
+    /**
+     * 指定されたページに表示する、指定したユーザーが日記を作成した日付のリストを返却
+     * @param user
+     * @param page
+     * @return
+     */
+    public List<LocalDate> getDates(UserView user, int page){
+        List<LocalDate> dates = getDates(user);
+        List<LocalDate> datesPerPage = new ArrayList<LocalDate>();
+        int max = page * JpaConst.ROW_PER_PAGE - 1;//ページに表示されるリスト要素の最終
+        int mini = (page - 1) * JpaConst.ROW_PER_PAGE;//ページに表示されるリスト要素の初めの番号
+        int size = dates.size();
+        System.out.println("page" + page + "max" + max + "mini" + mini);
+        if(size > max) {//リストサイズがページ最大データ数より大きいとき
+            for(int i = 0; i < JpaConst.ROW_PER_PAGE; i++) {
+                datesPerPage.add(dates.get(mini + i));
+
+            }
+            System.out.println("max");
+        } else if(size > mini && size <= max) {//ページ最小～最大データ数内の時
+            for(int i = 0; i < (size % JpaConst.ROW_PER_PAGE); i++) {
+                datesPerPage.add(dates.get(mini + i));
+
+            }
+            System.out.println("middle");
+        }else {
+            System.out.println("mini");
+            return null;
+        }
+
+        System.out.println("public dates size" + datesPerPage.size());
+        return datesPerPage;
+
+    }
+    /**
+     * 指定したユーザーが日記を作成した日付のリスト件数を返却
+     * @param user
+     * @return  日付リスト件数
+     */
+    public int getAllDate(UserView user) {
+        int dates = getDates(user).size();
+
+        return dates;
+
+    }
+    /**
+     * 指定したユーザーの指定した日付に作成された日記データのリストを返却
+     * @param user
+     * @param date
+     * @return 日記データのリスト
+     */
+    public List<DiaryView> getCreatedAtDate(UserView user, LocalDate date){
+        List<Diary> diaries = em.createNamedQuery(JpaConst.Q_DIA_GET_DATE, Diary.class)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
+                .setParameter(JpaConst.JPQL_PARM_DIA_DATE, date)
+                .getResultList();
+
+        return DiaryConverter.toViewList(diaries);
+
+    }
+
 
     /**
      * 画面から入力された日記の登録内容を元にデータを1件作成し、日記テーブルに登録する
@@ -125,5 +187,19 @@ public class DiaryService extends ServiceBase {
         em.getTransaction().commit();
 
     }
+/**
+     * 指定したユーザーが日記を書いた日付のリストを取得し返却する
+     * @param user
+     * @return 日付のリスト
+     */
+    private List<LocalDate> getDates(UserView user){
+        List<LocalDate> d = em.createNamedQuery(JpaConst.Q_DATES_GET_DIA, LocalDate.class)
+                                                 .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
+                                                 .getResultList();
+        System.out.println("private da size" +d.size());
+        List<LocalDate> dates = new ArrayList<LocalDate>(new LinkedHashSet<>(d));
+        System.out.println("private dates size" + dates.size());
+        return dates;
 
+    }
 }
