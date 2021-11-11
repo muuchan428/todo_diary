@@ -12,6 +12,7 @@ import actions.views.DiaryConverter;
 import actions.views.DiaryView;
 import constants.JpaConst;
 import models.Diary;
+
 import models.validators.DiaryValidator;
 /**
  *
@@ -154,6 +155,13 @@ public class DiaryService extends ServiceBase {
         return errors;
     }
 
+    public void destroy(Integer id) {
+        DiaryView diary = findOne(id);
+
+        destroy(diary);
+
+    }
+
     /**
      * idを条件にデータを1件取得する
      * @param id
@@ -199,6 +207,18 @@ public class DiaryService extends ServiceBase {
         System.out.println("private da size" +d.size());
         List<LocalDate> dates = new ArrayList<LocalDate>(new LinkedHashSet<>(d));
         return dates;
+
+    }
+
+    private void destroy(DiaryView dv) {
+        Diary diary = (Diary)em.createNamedQuery(JpaConst.Q_DIA_GET_BY_ID,Diary.class)
+                .setParameter(JpaConst.JPQL_PARM_DIARY,dv.getId())
+                .getSingleResult();
+
+
+em.getTransaction().begin();
+em.remove(diary);
+em.getTransaction().commit();
 
     }
 }

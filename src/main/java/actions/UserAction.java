@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
-import constants.JpaConst;
 import constants.MessageConst;
 import constants.PropertyConst;
 /**
@@ -175,6 +174,11 @@ public class UserAction extends ActionBase {
                 }
             }
         }
+        /**
+         * 削除を行う
+         * @throws ServletException
+         * @throws IOException
+         */
         public void destroy() throws ServletException, IOException {
 
             //CSRF対策 tokenのチェック

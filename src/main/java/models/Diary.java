@@ -40,6 +40,11 @@ import lombok.Setter;
     @NamedQuery(
             name = JpaConst.Q_DATES_GET_DIA,
             query = JpaConst.Q_DATES_GET_DIA_DEF),
+   @NamedQuery(
+           name = JpaConst.Q_DIA_GET_BY_ID,
+           query = JpaConst.Q_DIA_GET_BY_ID_DEF)
+
+
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)

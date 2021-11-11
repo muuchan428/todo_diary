@@ -64,6 +64,7 @@ public interface JpaConst {
         String JPQL_PARM_PASSWORD = "password";
         String JPQL_PARM_USR_ID = "userId";
         String JPQL_PARM_DIA_DATE = "diaryDate";
+        String JPQL_PARM_DIARY = "diary";
 
         //NamedQueryの nameとquery
         //User
@@ -90,8 +91,10 @@ public interface JpaConst {
        //ログイン中のユーザーの指定された日付の日記を取得する
         String Q_DIA_GET_DATE = ENTITY_DIA + ".getDate";
         String Q_DIA_GET_DATE_DEF ="SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.diaryDate = :" + JPQL_PARM_DIA_DATE + " ORDER BY d.id DESC";
-
         //ログイン中のユーザーが日記を作成した日付をすべて取得
         String Q_DATES_GET_DIA = ENTITY_DIA + ".getDates";
         String Q_DATES_GET_DIA_DEF = "SELECT d.diaryDate FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " ORDER BY d.diaryDate DESC";
+      //指定したidを保持するユーザーの情報を取得する
+        String Q_DIA_GET_BY_ID = ENTITY_DIA + "getById";
+        String Q_DIA_GET_BY_ID_DEF = "SELECT d FROM Diary AS d WHERE d.id = : " + JPQL_PARM_DIARY;
 }

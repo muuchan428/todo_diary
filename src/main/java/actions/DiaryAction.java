@@ -15,7 +15,7 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
-import constants.PropertyConst;
+
 
 public class DiaryAction extends ActionBase {
 
@@ -78,6 +78,11 @@ public class DiaryAction extends ActionBase {
         forward(ForwardConst.FW_DIA_NEW);
 
     }
+    /**
+     * 日記一覧を表示
+     * @throws ServletException
+     * @throws IOException
+     */
     public void show() throws ServletException, IOException {
 
 
@@ -105,15 +110,17 @@ public class DiaryAction extends ActionBase {
     //詳細画面を表示
     forward(ForwardConst.FW_DIA_SHOW);
     }
-
+    /**
+     * 編集画面を表示
+     * @throws ServletException
+     * @throws IOException
+     */
     public void edit() throws ServletException, IOException {
 
-        //セッションからログイン中の従業員情報を取得
-          loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USR);
           //idを条件に日記データを取得
           DiaryView diary = diaryService.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
           //日記を作成したユーザーかどうかをチェック
-        if(diary.getUser().getId() == loginUser.getId()) {
+        if(checkUser()) {
 
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
             putRequestScope(AttributeConst.DIARY, diary);//入力された日報情報
@@ -219,6 +226,48 @@ public class DiaryAction extends ActionBase {
             }
         }
     }
+    /**
+     * 削除を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void destroy() throws ServletException, IOException {
+        System.out.println("destroy");
+        //セッションからログイン中の従業員情報を取得
+        loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USR);
+
+        System.out.println(getTokenId() + " " + getRequestParam(AttributeConst.TOKEN));
+        //CSRF対策 tokenのチェック
+        if (checkToken() && checkUser()) {
+            System.out.println("check ok");
+            //idを条件に日記を削除する
+            diaryService.destroy(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+            //セッションに削除完了のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+
+            //一覧画面にリダイレクト
+            redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_INDEX);
+        }
+    }
+    private boolean checkUser() throws ServletException, IOException {
+
+      //セッションからログイン中の従業員情報を取得
+        loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USR);
+        //idを条件に日記データを取得
+        DiaryView diary = diaryService.findOne(toNumber(getRequestParam(AttributeConst.DIA_ID)));
+        //日記を作成したユーザーかどうかをチェック
+      if(diary.getUser().getId() != loginUser.getId()) {
+
+            //ログインユーザーが設定されていない、またはIDと一致しない場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
 }
 
 

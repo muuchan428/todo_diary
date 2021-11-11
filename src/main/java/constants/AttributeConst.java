@@ -45,13 +45,15 @@ public enum AttributeConst {
     DIA_ID("id"),
     DIA_DATE("diary_date"),
     DIA_CONTENT("content"),
+    DIA_USR("diary_user"),
     DATES("dates"),
     DATE_COUNT("dates_count"),
 
     //タスク管理
-    TASK("follow"),
-    TASKS("follows"),
-    TASK_COUNT("follow_count"),
+    TASK("task"),
+    TASKS("tasks"),
+    TASK_COUNT("task_count"),
+    TASK_USR("task_user"),
     TASK_ID("id"),
 
     FIN_FLAG_TRUE(1),
