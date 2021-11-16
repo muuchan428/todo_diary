@@ -52,9 +52,10 @@ public enum AttributeConst {
     //タスク管理
     TASK("task"),
     TASKS("tasks"),
+    TSK_CONTENT("content"),
     TASK_COUNT("task_count"),
-    TASK_USR("task_user"),
-    TASK_ID("id"),
+    TSK_USR("task_user"),
+    TSK_ID("id"),
 
     FIN_FLAG_TRUE(1),
     FIN_FLAG_FALSE(0);

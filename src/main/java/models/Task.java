@@ -2,6 +2,7 @@ package models;
 
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -27,25 +28,31 @@ import lombok.Setter;
  *
  */
 @Table(name = JpaConst.TABLE_TSK)
-//@NamedQueries({
-//    @NamedQuery(
-//            name = JpaConst.Q_DIA_GET_ALL_MINE,
-//            query = JpaConst.Q_DIA_GET_ALL_MINE_DEF),
-//    @NamedQuery(
-//            name = JpaConst.Q_DIA_COUNT,
-//            query = JpaConst.Q_DIA_COUNT_DEF),
-//    @NamedQuery(
-//            name = JpaConst.Q_DIA_GET_DATE,
-//            query = JpaConst.Q_DIA_GET_DATE_DEF),
-//    @NamedQuery(
-//            name = JpaConst.Q_DATES_GET_DIA,
-//            query = JpaConst.Q_DATES_GET_DIA_DEF),
-//   @NamedQuery(
-//           name = JpaConst.Q_DIA_GET_BY_ID,
-//           query = JpaConst.Q_DIA_GET_BY_ID_DEF)
-//
-//
-//})
+@NamedQueries({
+    @NamedQuery(
+            name = JpaConst.Q_TSK_GET_ALL_MINE,
+            query = JpaConst.Q_TSK_GET_ALL_MINE_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_TSK_COUNT,
+            query = JpaConst.Q_TSK_COUNT_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_TSK_GET_DATE,
+            query = JpaConst.Q_TSK_GET_DATE_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_DATES_GET_TSK,
+            query = JpaConst.Q_DATES_GET_TSK_DEF),
+   @NamedQuery(
+           name = JpaConst.Q_TSK_GET_BY_ID,
+           query = JpaConst.Q_TSK_GET_BY_ID_DEF),
+   @NamedQuery(
+           name = JpaConst.Q_TSK_GET_NOT_FIN,
+           query = JpaConst.Q_TSK_GET_NOT_FIN_DEF),
+   @NamedQuery(
+           name = JpaConst.Q_TSK_GET_CNT_ID,
+           query = JpaConst.Q_TSK_GET_CNT_ID_DEF)
+
+
+})
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)
@@ -85,7 +92,7 @@ public class Task {
     private LocalDateTime createdAt;
 
     /**
-     * 完了日時
+     * 完了日
      */
     @Column(name = JpaConst.TSK_COL_FINISHED_AT, nullable = false)
     private LocalDateTime finishedAt;

@@ -3,26 +3,27 @@ package models.validators;
 import java.util.ArrayList;
 import java.util.List;
 
-import actions.views.DiaryView;
+
+import actions.views.TaskView;
 import constants.MessageConst;
 
 /**
- * 日記インスタンスに設定されている値のバリデーションを行うクラス
+ * タスクインスタンスに設定されている値のバリデーションを行うクラス
  */
-public class DiaryValidator {
+public class TaskValidator {
 
     /**
-     * 日記インスタンスの各項目についてバリデーションを行う
-     * @param dv 日報インスタンス
+     * タスクインスタンスの各項目についてバリデーションを行う
+     * @param tv タスクインスタンス
      * @return エラーのリスト
      */
-    public static List<String> validate(DiaryView dv) {
+    public static List<String> validate(TaskView tv) {
         List<String> errors = new ArrayList<String>();
 
 
 
         //内容のチェック
-        String contentError = validateContent(dv.getContent());
+        String contentError = validateContent(tv.getContent());
         if (!contentError.equals("")) {
             errors.add(contentError);
         }

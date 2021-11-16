@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -229,6 +230,7 @@ public abstract class ActionBase {
         }
         return LocalDate.parse(strDate);
     }
+
 
     /**
      * リクエストスコープから指定されたパラメータの値を取得し、返却する

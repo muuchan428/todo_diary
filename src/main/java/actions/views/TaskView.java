@@ -1,6 +1,7 @@
 package actions.views;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -41,7 +42,7 @@ public class TaskView {
     private LocalDateTime createdAt;
 
     /**
-     * 完了日時
+     * 完了日
      */
     private LocalDateTime finishedAt;
     /**

@@ -7,7 +7,7 @@ import java.util.List;
 import models.Task;
 
 /**
- * 日報データのDTOモデル⇔Viewモデルの変換を行うクラス
+ * タスクデータのDTOモデル⇔Viewモデルの変換を行うクラス
  *
  */
 public class TaskConverter {
