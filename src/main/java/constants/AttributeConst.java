@@ -8,7 +8,7 @@ package constants;
 public enum AttributeConst {
 
     //フラッシュメッセージ
-    FLUSH("flush"),
+    FLASH("flash"),
 
     //一覧画面共通
     MAX_ROW("maxRow"),
@@ -47,13 +47,16 @@ public enum AttributeConst {
     DIA_CONTENT("content"),
     DIA_USR("diary_user"),
     DATES("dates"),
+    MONTHS("months"),
+    MONTH("month"),
+    MONTH_COUNT("months_count"),
     DATE_COUNT("dates_count"),
 
     //タスク管理
     TASK("task"),
     TASKS("tasks"),
     TSK_CONTENT("content"),
-    TASK_COUNT("task_count"),
+    TSK_COUNT("tasks_count"),
     TSK_USR("task_user"),
     TSK_ID("id"),
 

@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -67,7 +68,7 @@ public abstract class ActionBase {
             String command = request.getParameter(ForwardConst.CMD.getValue());
 
             //commandに該当するメソッドを実行する
-            //(例: action=Employee command=show の場合 EmployeeActionクラスのshow()メソッドを実行する)
+
             commandMethod = this.getClass().getDeclaredMethod(command, new Class[0]);
             commandMethod.invoke(this, new Object[0]); //メソッドに渡す引数はなし
 
@@ -136,7 +137,7 @@ public abstract class ActionBase {
         response.sendRedirect(redirectUrl);
 
     }
-    protected void redirect(ForwardConst action, ForwardConst command, LocalDate date)
+    protected void redirect(ForwardConst action, ForwardConst command, YearMonth date)
             throws ServletException, IOException {
 
         //URLを構築
@@ -200,6 +201,13 @@ public abstract class ActionBase {
     protected LocalDate getDate() {
         LocalDate date;
         date = LocalDate.parse(request.getParameter(AttributeConst.DATE.getValue()));
+
+        return date;
+    }
+
+    protected YearMonth getMonth() {
+        YearMonth date;
+        date = YearMonth.parse(request.getParameter(AttributeConst.DATE.getValue()));
 
         return date;
     }

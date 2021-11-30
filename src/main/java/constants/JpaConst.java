@@ -63,10 +63,12 @@ public interface JpaConst {
         String JPQL_PARM_USER = "user";
         String JPQL_PARM_PASSWORD = "password";
         String JPQL_PARM_USR_ID = "userId";
-        String JPQL_PARM_DIA_DATE = "diaryDate";
+        String JPQL_PARM_DATE = "Date";
         String JPQL_PARM_DIARY = "diary";
         String JPQL_PARM_TASK = "task";
-        String JPQL_PARM_FLAG = "task";
+        String JPQL_PARM_FLAG = "flag";
+        String JPQL_PARM_S_DATE = "startDate";
+        String JPQL_PARM_E_DATE ="endDate";
 
         //NamedQueryの nameとquery
         //User
@@ -90,36 +92,40 @@ public interface JpaConst {
       //ログイン中のユーザーの全ての日記の件数を取得する
         String Q_DIA_COUNT = ENTITY_DIA + ".count";
         String Q_DIA_COUNT_DEF = "SELECT COUNT(d) FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER;
-       //ログイン中のユーザーの指定された日付の日記を取得する
-        String Q_DIA_GET_DATE = ENTITY_DIA + ".getDate";
-        String Q_DIA_GET_DATE_DEF ="SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.diaryDate = :" + JPQL_PARM_DIA_DATE + " ORDER BY d.id DESC";
+        //ログイン中のユーザーの指定された月に作成された日記を取得する
+        String Q_DIA_GET_MONTH = ENTITY_DIA + "getMonth";
+        String Q_DIA_GET_MONTH_DEF = "SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.diaryDate BETWEEN :" + JPQL_PARM_S_DATE + " AND :" + JPQL_PARM_E_DATE + " ORDER BY d.diaryDate DESC";
         //ログイン中のユーザーが日記を作成した日付をすべて取得
         String Q_DATES_GET_DIA = ENTITY_DIA + ".getDates";
         String Q_DATES_GET_DIA_DEF = "SELECT d.diaryDate FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " ORDER BY d.diaryDate DESC";
-      //指定したidを保持するユーザーの情報を取得する
+      //指定したidを保持する日記データの情報を取得する
         String Q_DIA_GET_BY_ID = ENTITY_DIA + "getById";
         String Q_DIA_GET_BY_ID_DEF = "SELECT d FROM Diary AS d WHERE d.id = : " + JPQL_PARM_DIARY;
+        //ログイン中のユーザーの指定された日付に作成された日記を取得する。
+        String Q_DIA_GET_BY_DATE = ENTITY_DIA + ".getBydate";
+        String Q_DIA_GET_BY_DATE_DEF = "SELECT d FROM Diary AS d WHERE d.user = :" + JPQL_PARM_USER + " AND d.diaryDate = : " + JPQL_PARM_DATE + " ORDER BY d.id DESC" ;
 
         //Task
-        //ログイン中のユーザーの全てのタスクをidの降順に取得する
-         String Q_TSK_GET_ALL_MINE = ENTITY_TSK + ".getAll";
-         String Q_TSK_GET_ALL_MINE_DEF = "SELECT t FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER + " ORDER BY t.id DESC";
-       //ログイン中のユーザーの全てのタスクの件数を取得する
-         String Q_TSK_COUNT = ENTITY_TSK + ".count";
-         String Q_TSK_COUNT_DEF = "SELECT COUNT(t) FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER;
-        //ログイン中のユーザーの指定された日付のタスクを取得する
-         String Q_TSK_GET_DATE = ENTITY_TSK + ".getFinishDate";
-         String Q_TSK_GET_DATE_DEF ="SELECT t FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER + " AND t.finishedAt = :" + JPQL_PARM_DIA_DATE + " ORDER BY t.id DESC";
-         //ログイン中のユーザーがタスクを作成した日付をすべて取得
-         String Q_DATES_GET_TSK = ENTITY_TSK + ".getDates";
-         String Q_DATES_GET_TSK_DEF = "SELECT t.createdAt FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER + " ORDER BY t.createdAt DESC";
+        //ログイン中のユーザーのすべてのタスクを取得する。
+        String Q_TSK_GET_ALL_MINE = ENTITY_TSK + ".getAll";
+        String Q_TSK_GET_ALL_MINE_DEF = "SELECT t FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER;
+        //ログイン中のユーザーのすべてのタスクの件数を取得する
+        String Q_TSK_COUNT_ALL = ENTITY_TSK + ".countAll";
+        String Q_TSK_COUNT_ALL_DEF = "SELECT COUNT(t) FROM Task AS t WHERE t.user = : " +JPQL_PARM_USER;
+       //ログイン中のユーザーの全ての完了タスクの件数を取得する
+         String Q_TSK_COUNT = ENTITY_TSK + ".countFin";
+         String Q_TSK_COUNT_DEF = "SELECT COUNT(t) FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER + " AND finishFlag = : " + JPQL_PARM_FLAG;
+         //ログイン中のユーザーがタスクを完了した日付をすべて取得
+         String Q_DATES_GET_FIN_TSK = ENTITY_TSK + ".getDates";
+         String Q_DATES_GET_FIN_TSK_DEF = "SELECT t.finishedAt FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER + " AND t.finishFlag = :" + JPQL_PARM_FLAG + " ORDER BY t.createdAt DESC";
        //指定したidを保持するタスクの情報を取得する
          String Q_TSK_GET_BY_ID = ENTITY_TSK + ".getById";
          String Q_TSK_GET_BY_ID_DEF = "SELECT t FROM Task AS t WHERE t.id = : " + JPQL_PARM_TASK;
-         //未完了のタスクを取得する
-         String Q_TSK_GET_NOT_FIN = ENTITY_TSK + ".getNotFin";
-         String Q_TSK_GET_NOT_FIN_DEF = "SELECT t FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER + " AND t.finishFlag = :" + JPQL_PARM_FLAG + " ORDER BY t.id DESC";
-         //
-         String Q_TSK_GET_CNT_ID = ENTITY_TSK + ".getCntId";
-         String Q_TSK_GET_CNT_ID_DEF = "SELECT t.id, t.content FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER +  " AND t.finishFlag = :" + JPQL_PARM_FLAG + " ORDER BY t.id DESC";
+         //未完了のタスクを取得
+         String Q_TSK_GET_NOT_FIN = ENTITY_TSK + ".getCntId";
+         String Q_TSK_GET_NOT_FIN_DEF = "SELECT t FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER +  " AND t.finishFlag = :" + JPQL_PARM_FLAG + " ORDER BY t.id DESC";
+         //ログイン中のユーザーの指定された期間に完了されたタスクを取得する(日付、月に使用)
+         String Q_TSK_GET_BY_DATE = ENTITY_TSK + ".getMonth";
+         String Q_TSK_GET_BY_DATE_DEF = "SELECT t FROM Task AS t WHERE t.user = :" + JPQL_PARM_USER + " AND t.finishFlag = :" + JPQL_PARM_FLAG + " AND t.finishedAt BETWEEN :" + JPQL_PARM_S_DATE + " AND :" + JPQL_PARM_E_DATE + " ORDER BY t.finishedAt DESC";
+
 }

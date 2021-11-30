@@ -19,35 +19,43 @@ h1{
 h2{
       font-size:36px;
       margin-bottom:15px;
+      color: #999999ff;
 }
 
 li{
     margin-top:10px;
     margin-bottom:10px;
+
 }
 
 p{
     margin-top:15px;
     margin-bottom:15px;
+    font-weight: 600;
+
+}
+
+pre {
+    white-space: pre-wrap ;
 }
 
 a {
     text-decoration: none;
-    color: #24738e;
+}
+span{
+    font-weight: 600;
 }
 
-table, tr, th, td {
-    border: 1px solid #cccccc;
-}
+
 
 table {
-    width: 100%;
+    width: 80%;
     table-layout: fixed;
 }
 
 th {
     width: 26%;
-    padding: 10px 2%;
+    padding: 10px 0;
 }
 
 td {
@@ -61,27 +69,60 @@ button {
 }
 
 #footer {
+
     text-align: center;
 }
-
-#flush_success {
-    width: 100%;
-    padding-top: 28px;
-    padding-left: 2%;
-    padding-bottom: 28px;
-    margin-bottom: 15px;
-    color: #155724;
-    background-color: #d4edda;
+#flash {
+    position: fixed;
+    width:60%;
+    animation: Slide 4s forwards;
 }
 
-#flush_error {
-    width: 100%;
+@keyframes Slide {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+   30%{
+   opacity: 1;
+   transform:translateY(0);
+   }
+
+   70%{
+   opacity: 1;
+   transform: translateY(0);
+   }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+}
+
+#flash_success {
+    width: 80%;
     padding-top: 28px;
     padding-left: 2%;
     padding-bottom: 28px;
-    margin-bottom: 15px;
-    color: #721c24;
+    margin:10px auto;
+    font-size: 25px;
+    font-weight:700;
+    color: #999999ff;
+    background-color: #d4edda;
+    border-radius:30px;
+}
+
+#flash_error {
+    width: 80%;
+    padding-top: 28px;
+    padding-left: 2%;
+    padding-bottom: 28px;
+    margin:10px auto;
+    font-size:20px;
+    font-weight:600;
+    color: #999999ff;
     background-color: #f8d7da;
+    border-radius:30px;
 }
 
 
@@ -103,13 +144,10 @@ select {
     font-size: 35px;
 }
 
-#header_menu {
+#menu {
 
-    width: 30%;
-    padding-right: 1%;
+    width: 20%;
     display: inline-block;
-    text-align: right;
-    padding-top: 25px;
     }
 
 #header{
@@ -118,69 +156,63 @@ select {
     background-color:#abebb4;
 
 }
-#menu_content{
-    background-color: #999999ff;
+#menu_content ul{
+    display:inline-block;
+    text-align: center;
+}
+#menu_content li{
+    text-align: left;
+}
+
+#menu_content span{
+    display: block;
+    text-align:center;
     color: white;
+}
+#menu_content i{
+    padding-right: 0.5em;
+}
+#menu_content {
+    background-color: #999999ff;
+   border-radius: 30px;
+   padding:10px;
+}
+#menu_content a{
+     color: white;
+     font-size: 20px;
       font-weight: 700;
    width: 150px;
-   display:inline-block;
-   text-align: left;
 }
-details[open] .open {
-  display: none;
-}
-
-
-details:not([open]) .close {
-  display: none;
-}
-summary {
-      font-weight: 700;
-    list-style:none;
-    color: white;
-    font-size:25px;
+#menu_content a:hover{
+    color: #abebb4;
 }
 
 #content_parent{
         text-align: center;
+        display: flex;
+        height:850px;
 }
-#content{
+#contents{
     width:60%;
+    height: 800px;
     text-align: center;
     display:inline-block;
     background-color: #eeeeee;
+    overflow: auto;
+
 
 
 }
 
 #header a {
-    color: #eeeeee;
+    color: white;
 }
 
 h1 a {
     color: #eeeeee;
 }
 
-table#report_list th {
-    font-weight: bold;
-    padding: 10px 2%;
-}
 
-table#report_list .report_name {
-    width: 20%;
-    padding: 10px 2%;
-}
-table#report_list .report_date {
-    width: 20%;
-}
-
-table#report_list .report_title {
-    width: 37%;
-}
-
-table#report_list .report_action {
-    width: 13%;
-}
 
 pre {
     font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
@@ -197,7 +229,6 @@ h3 {
 #dates_list  a{
      background-color: #999999ff;
      color: white;
-     padding: 5px;
        display: flex;
   justify-content: space-between;
   align-items: center;
@@ -287,22 +318,417 @@ p.space {
     margin-bottom: 5px;
 }
 
-#diary_list .time{
-    width: 20%;
-}
-#diary_list .content{
-    width: 60%;
+#no_history {
+     background-color: #999999ff;
+     color: white;
+     align-items: center;
+  margin: 0 auto;
+  padding: 1em 2em;
+  width: 300px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 50vh;
 }
 
-#diary_list th.option{
+
+#todo {
+    width: 20%;
+    display: inline-block;
+    padding-right: 5px;
+
+}
+#addTodo{
+    position: relative;
+
+
+}
+#addTodo input#content{
+    font-weight: 600;
+    box-sizing: border-box;
+    width:90%;
+    padding: 0.3em;
+    transition: 0.3s;
+    letter-spacing: 1px;
+    color: #444444;
+    border: none;
+    border-bottom: 2px solid #999999ff;
+    background: transparent;
+}
+#addTodo input#content:focus{
+    border-bottom: 2px solid #abebb4;
+    outline: none;
+}
+
+::placeholder {
+  color: #cccccc;
+}
+
+
+#addTodo #send_addTodo{
+ cursor: pointer;
+  font-size: 1.3em;
+  border: none;
+
+  background: none;
+  color: #999999ff;
+  outline : none;
+  position: absolute;
+  right:2px;
+  top: 1px;
+
+
+}
+
+#addTodo #send_addTodo:hover{
+     color: #8EB8FF;
+}
+
+#todo_list{
+    overflow: auto;
+    height:600px;
+}
+#todo_list li{
+    display: flex;
+     background:#999999ff;
+         border-radius: 50vh;
+          font-weight: 600;
+
+}
+#todo_list .btns {
+    display: flex;
+    align-items: center;
+    width:15%;
+
+
+}
+#todo_list .btns button.finishTodo{
+    margin-left:auto;
+}
+
+
+#todo_list button.deleteTodo {
+    text-align: center;
+    font-size: 20px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background:#999999ff;
+    color:#F08080;
+    font-weight: 700;
+}
+#todo_list #no_task span{
+    text-align:center;
+}
+#todo_list span{
+    text-align:left;
+    width: 70%;
+    color: white;
+
+     position: relative;
+    padding-top:5px;
+    padding-bottom: 5px;
+    padding-left:5px;
+
+
+}
+#todo_list button.finishTodo {
+    text-align: center;
+        font-size: 20px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    padding:0;
+    vertical-align: middle;
+    background:#999999ff;
+    color: #abebb4;
+
+
+}
+
+#todo_list button.finishTodo:hover {
+  text-decoration: none;
+  background-color: #abebb4;
+  color:white;
+}
+
+
+
+
+#todo_list button.deleteTodo:hover {
+    background-color: #F08080;
+    color:white;
+}
+
+#todo_flash p{
+    text-align:center;
+    font-weight: 600;
+    border-radius: 50vh;
+     position: relative;
+    padding: 5px;
+    color: #999999ff;
+    background-color: #d4edda;
+    margin-bottom: 0;
+}
+
+.diary_list,
+.task_list,
+#today_diary,
+#today_task,
+#user_data{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  background: #999999ff;
+  color: white;
+    border-radius: 30px;
+}
+
+.diary_list tr,
+.task_list tr{
+    border: 0px none;
+  cursor: pointer;
+}
+.diary_list tr:hover{
+}
+
+.diary_list .time,
+.task_list .time,
+#user_data .time{
+    width: 20%;
+    text-align:center;
+}
+.diary_list .content,
+.task_list .content{
+    width: 60%;
+    font-weight: 600;
+}
+
+.diary_list .option,
+.task_list .option {
     width: 10%;
     text-align: center;
+
+}
+.diary_list .option a,
+.task_list .option a{
+    color:#abebb4;
+    padding:5px;
+
+    font-size: 20px;
+    border-radius: 50%;
+}
+.diary_list .option a:hover,
+.task_list .option a:hover{
+    background:#abebb4;
+    color:white;
+    padding:0.1em 0.3em;
+}
+#history details[open] summary{
+
+  background: #abebb4;
+}
+#history summary{
+    background-color: #999999ff;
+     color: white;
+  justify-content: space-between;
+  text-align:center;
+  margin: 0 auto;
+  padding: 1em 2em;
+  width: 30%;
+ font-size: 15px;
+  border-radius: 50vh;
+}
+#history summary span{
+    font-size: 20px;
+  font-weight: 700;
+}
+
+#history summary:hover{
+
+  background: #abebb4;
+}
+textarea,
+#form input[type="text"],
+#form input[type="password"]{
+    border-radius: 10px;
+    border-color:#cccccc;
+    color:white;
+    font-weight: 600;
+     padding: 4px 16px;
+     box-shadow: 0 0 0 1px #ccc inset;
+         appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    resize: vertical;
+    transition: 0.3s;
+    background-color:#999999ff;
+}
+textarea:focus,
+#form input[type="text"]:focus,
+#form input[type="password"]:focus{
+
+  border-color:#abebb4;
+  background-color: white;
+  color:#333333;
+  outline: none;
+}
+
+#form label{
+    font-size:16px;
+    font-weight: 600;
+    color:#999999ff;
+}
+
+#form input[type="date"] {
+        border-radius: 10px;
+    border-color:#999999ff;
+     color:white;
+    font-weight: 600;
+     padding: 4px 16px;
+         appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    resize: vertical;
+    transition: 0.3s;
+    background-color:#999999ff;
+}
+#form input[type="date"]:focus{
+      border-color:#abebb4;
+  background-color: white;
+  color:#333333;
+  outline: none;
+}
+
+#form button[type="submit"]{
+    border-radius: 50px;
+    border:none;
+    font-weight:600;
+    font-size: 20px;
+   background:#999999ff;
+   color:white;
+   padding: 0.3em 1.0em;
+
+}
+#form button[type="submit"]:hover{
+    background:#abebb4;
+
+
+}
+
+#delete_diary,
+#delete_task{
+    display:inline-block;
+    background:#999999ff;
+     border-radius:50px;
+    padding: 0.2em 0.5em;
+     font-size:20px;
+}
+ #delete_diary a,
+ #delete_task a{
+    color:white;
+}
+#delete_diary:hover,
+#delete_task:hover{
+    background:#F08080;
+}
+
+#data_count {
+    display:flex;
+
+    justify-content:center;
+}
+#data_count .count_title{
+    font-size: 20px;
+}
+#today_data #no_diary a{
+    font-size:40px;
+    color:#abebb4;
+    border-radius:50%;
+    padding: 0.1em 0.3em;
+}
+#today_data #no_diary a:hover{
+    color:white;
     background:#abebb4;
 }
-
-#diary_list th.option a{
-    color: white;
-      font-size: 18px;
-   font-weight: 700;
+#data_count #diary_count,
+#data_count #task_count{
+    background:#dddddd;
+    color:#999999ff;
+    border-radius:30%;
+    font-size:50px;
+    width:100px;
+    height:100px;
+    padding:1em;
+    margin: 0 0.5em;
 
 }
+
+#today_data #today_diary,
+#today_data #today_task{
+    margin-top: 1em;
+    padding: 1em 0;
+}
+
+#today_data #no_diary,
+#today_data #no_task{
+    font-size: 30px;
+
+}
+
+#data{
+    background: #999999ff;
+    color:white;
+    border-radius:30px;
+}
+#data, #today_data, #user_data{
+    padding: 1em 0;
+    width:95%;
+    margin:auto;
+}
+
+#user_data th,
+#user_data td{
+    text-align:center;
+    font-weight:600;
+
+}
+#user_edit a{
+    background:#999999ff;
+    border-radius:30px;
+    color:white;
+    font-weight:600;
+    font-size: 20px;
+    padding: 0.3em 1em;
+}
+#user_delete{
+    margin-top:30px;
+}
+#user_delete a{
+    background:#F08080;
+    color:white;
+    font-weight:600;
+    font-size: 20px;
+    border-radius:30px;
+    padding: 0.3em 1em;
+}
+#user_delete a:hover{
+    background:#999999ff;
+    color:#F08080;
+}
+hr {
+    width: 50%;
+    margin: 20px auto;
+}
+
+#signIn a{
+    background:#999999ff;
+    color:white;
+    font-size:25px;
+    padding: 0.3em 1em;
+    border-radius:30px;
+
+}
+

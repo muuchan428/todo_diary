@@ -35,14 +35,17 @@ import lombok.Setter;
             name = JpaConst.Q_DIA_COUNT,
             query = JpaConst.Q_DIA_COUNT_DEF),
     @NamedQuery(
-            name = JpaConst.Q_DIA_GET_DATE,
-            query = JpaConst.Q_DIA_GET_DATE_DEF),
-    @NamedQuery(
             name = JpaConst.Q_DATES_GET_DIA,
             query = JpaConst.Q_DATES_GET_DIA_DEF),
    @NamedQuery(
            name = JpaConst.Q_DIA_GET_BY_ID,
-           query = JpaConst.Q_DIA_GET_BY_ID_DEF)
+           query = JpaConst.Q_DIA_GET_BY_ID_DEF),
+   @NamedQuery(
+           name = JpaConst.Q_DIA_GET_MONTH,
+           query = JpaConst.Q_DIA_GET_MONTH_DEF),
+   @NamedQuery(
+           name = JpaConst.Q_DIA_GET_BY_DATE,
+           query = JpaConst.Q_DIA_GET_BY_DATE_DEF)
 
 
 })

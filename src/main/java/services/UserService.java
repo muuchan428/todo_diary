@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.NoResultException;
-
 import actions.views.UserConverter;
 import actions.views.UserView;
 import constants.JpaConst;
@@ -139,18 +138,19 @@ public class UserService extends ServiceBase {
         //エラーを返却（エラーがなければ0件の空リスト）
         return errors;
     }
-    /**idを条件にユーザーデータを削除する
+    /**idを条件にユーザー、日記、タスクデータを削除する
      *
      * @param id
      */
     public void destroy(Integer id) {
 
         //idを条件に登録済みのユーザー情報を取得する
-       UserView savedUsr = findOne(id);
+        User usr = findOneInternal(id);
+        //ユーザー情報を削除する。
+        em.getTransaction().begin();
+        em.remove(usr);
+        em.getTransaction().commit();
 
-
-        //削除処理を行う
-        destroy(savedUsr);
 
     }
     /**
@@ -209,19 +209,6 @@ public class UserService extends ServiceBase {
         em.getTransaction().commit();
 
     }
-    /**
-     * ユーザーデータを削除する
-     */
-    private void destroy(UserView uv) {
-        User usr = (User)em.createNamedQuery(JpaConst.Q_USR_GET_BY_ID,User.class)
-                .setParameter(JpaConst.JPQL_PARM_USER,uv.getId())
-                .getSingleResult();
 
-
-em.getTransaction().begin();
-em.remove(usr);
-em.getTransaction().commit();
-
-    }
 
 }

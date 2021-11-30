@@ -45,12 +45,12 @@ public class AuthAction extends ActionBase {
         putRequestScope(AttributeConst.TOKEN, getTokenId());
 
         //セッションにフラッシュメッセージが登録されている場合はリクエストスコープに設定する
-        String flush = getSessionScope(AttributeConst.FLUSH);
+        String flush = getSessionScope(AttributeConst.FLASH);
         if (flush != null) {
             putRequestScope(
-                    AttributeConst.FLUSH,
-                    getSessionScope(AttributeConst.FLUSH));
-            removeSessionScope(AttributeConst.FLUSH);
+                    AttributeConst.FLASH,
+                    getSessionScope(AttributeConst.FLASH));
+            removeSessionScope(AttributeConst.FLASH);
         }
 
         //ログイン画面を表示
@@ -82,7 +82,7 @@ public class AuthAction extends ActionBase {
                 //セッションにログインした従業員を設定
                 putSessionScope(AttributeConst.LOGIN_USR, uv);
                 //セッションにログイン完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGINED.getMessage());
+                putSessionScope(AttributeConst.FLASH, MessageConst.I_LOGINED.getMessage());
                 //トップページへリダイレクト
                 redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
             }
@@ -112,7 +112,7 @@ public class AuthAction extends ActionBase {
         removeSessionScope(AttributeConst.LOGIN_USR);
 
         //セッションにログアウト時のフラッシュメッセージを追加
-        putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGOUT.getMessage());
+        putSessionScope(AttributeConst.FLASH, MessageConst.I_LOGOUT.getMessage());
 
         //ログイン画面にリダイレクト
         redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SHOW_LOGIN);

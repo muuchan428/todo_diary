@@ -2,7 +2,6 @@ package models;
 
 
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -30,17 +29,14 @@ import lombok.Setter;
 @Table(name = JpaConst.TABLE_TSK)
 @NamedQueries({
     @NamedQuery(
-            name = JpaConst.Q_TSK_GET_ALL_MINE,
-            query = JpaConst.Q_TSK_GET_ALL_MINE_DEF),
-    @NamedQuery(
             name = JpaConst.Q_TSK_COUNT,
             query = JpaConst.Q_TSK_COUNT_DEF),
     @NamedQuery(
-            name = JpaConst.Q_TSK_GET_DATE,
-            query = JpaConst.Q_TSK_GET_DATE_DEF),
+            name = JpaConst.Q_TSK_GET_BY_DATE,
+            query = JpaConst.Q_TSK_GET_BY_DATE_DEF),
     @NamedQuery(
-            name = JpaConst.Q_DATES_GET_TSK,
-            query = JpaConst.Q_DATES_GET_TSK_DEF),
+            name = JpaConst.Q_DATES_GET_FIN_TSK,
+            query = JpaConst.Q_DATES_GET_FIN_TSK_DEF),
    @NamedQuery(
            name = JpaConst.Q_TSK_GET_BY_ID,
            query = JpaConst.Q_TSK_GET_BY_ID_DEF),
@@ -48,8 +44,13 @@ import lombok.Setter;
            name = JpaConst.Q_TSK_GET_NOT_FIN,
            query = JpaConst.Q_TSK_GET_NOT_FIN_DEF),
    @NamedQuery(
-           name = JpaConst.Q_TSK_GET_CNT_ID,
-           query = JpaConst.Q_TSK_GET_CNT_ID_DEF)
+           name = JpaConst.Q_TSK_COUNT_ALL,
+           query = JpaConst.Q_TSK_COUNT_ALL_DEF),
+   @NamedQuery(
+           name = JpaConst.Q_TSK_GET_ALL_MINE,
+           query = JpaConst.Q_TSK_GET_ALL_MINE_DEF)
+
+
 
 
 })

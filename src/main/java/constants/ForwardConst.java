@@ -24,7 +24,8 @@ public enum ForwardConst {
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
-    CMD_SEARCH("search"),
+    CMD_COMPLETE("complete"),
+    CMD_DELETE("delete"),
 
     //id
     ID("id"),
@@ -32,6 +33,7 @@ public enum ForwardConst {
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
+    FW_ERR_TSK("error/tasksError"),
     FW_TOP_INDEX("topPage/index"),
     FW_LOGIN("login/login"),
     FW_USR_INDEX("users/index"),
@@ -42,8 +44,7 @@ public enum ForwardConst {
     FW_DIA_SHOW("diaries/show"),
     FW_DIA_NEW("diaries/new"),
     FW_DIA_EDIT("diaries/edit"),
-    FW_TSK_INDEX("tasks/index"),
-    FW_TSK_SHOW("tasks/show");
+    FW_TSK_EDIT("tasks/edit");
 
     /**
      * 文字列
