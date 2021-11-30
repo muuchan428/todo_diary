@@ -44,14 +44,7 @@ public class AuthAction extends ActionBase {
         //CSRF対策用トークンを設定
         putRequestScope(AttributeConst.TOKEN, getTokenId());
 
-        //セッションにフラッシュメッセージが登録されている場合はリクエストスコープに設定する
-        String flush = getSessionScope(AttributeConst.FLASH);
-        if (flush != null) {
-            putRequestScope(
-                    AttributeConst.FLASH,
-                    getSessionScope(AttributeConst.FLASH));
-            removeSessionScope(AttributeConst.FLASH);
-        }
+
 
         //ログイン画面を表示
         forward(ForwardConst.FW_LOGIN);

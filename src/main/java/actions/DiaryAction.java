@@ -57,12 +57,7 @@ public class DiaryAction extends ActionBase {
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
-        //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-        String flush = getSessionScope(AttributeConst.FLASH);
-        if (flush != null) {
-            putRequestScope(AttributeConst.FLASH, flush);
-            removeSessionScope(AttributeConst.FLASH);
-        }
+
         //一覧画面を表示
         forward(ForwardConst.FW_DIA_INDEX);
     }
@@ -111,16 +106,13 @@ public class DiaryAction extends ActionBase {
     putRequestScope(AttributeConst.MONTH, month);//
     putRequestScope(AttributeConst.DATES,dates);//日付のリスト
 
-    //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-    String flash = getSessionScope(AttributeConst.FLASH);
-    if (flash != null) {
-        putRequestScope(AttributeConst.FLASH, flash);
-        removeSessionScope(AttributeConst.FLASH);
-    }
 
     //詳細画面を表示
     forward(ForwardConst.FW_DIA_SHOW);
-    }
+}
+
+
+
     /**
      * 編集画面を表示
      * @throws ServletException

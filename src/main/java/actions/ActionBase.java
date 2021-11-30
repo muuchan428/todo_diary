@@ -67,6 +67,14 @@ public abstract class ActionBase {
             //パラメータからcommandを取得
             String command = request.getParameter(ForwardConst.CMD.getValue());
 
+            //セッションにフラッシュメッセージが登録されている場合はリクエストスコープに設定する
+        String flush = getSessionScope(AttributeConst.FLASH);
+        if (flush != null) {
+            putRequestScope(
+                    AttributeConst.FLASH,
+                    getSessionScope(AttributeConst.FLASH));
+            removeSessionScope(AttributeConst.FLASH);
+        }
             //commandに該当するメソッドを実行する
 
             commandMethod = this.getClass().getDeclaredMethod(command, new Class[0]);
@@ -80,6 +88,7 @@ public abstract class ActionBase {
             //commandの値が不正で実行できない場合エラー画面を呼び出し
             forward(ForwardConst.FW_ERR_UNKNOWN);
         }
+
 
     }
 

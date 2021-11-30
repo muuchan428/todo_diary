@@ -65,15 +65,6 @@ public class TopAction extends ActionBase {
        putRequestScope(AttributeConst.USER, loginUser);
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
-
-
-        //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-        String flush = getSessionScope(AttributeConst.FLASH);
-        if (flush != null) {
-            putRequestScope(AttributeConst.FLASH, flush);
-            removeSessionScope(AttributeConst.FLASH);
-        }
-
         //一覧画面を表示
         forward(ForwardConst.FW_TOP_INDEX);
     }
