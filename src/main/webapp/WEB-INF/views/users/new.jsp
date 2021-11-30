@@ -8,10 +8,12 @@
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
-        <h2>ユーザー情報入力</h2>
+        <h2>SIGN UP</h2>
+        <p></p>
 
-        <form method="POST" action="<c:url value='?action=${action}&command=${commCrt}' />">
+        <form id="form" method="POST" action="<c:url value='?action=${action}&command=${commCrt}' />">
             <c:import url="_form.jsp" />
+           <button type="submit">To register</button>
         </form>
 
     </c:param>

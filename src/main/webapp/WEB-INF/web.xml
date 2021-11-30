@@ -8,7 +8,7 @@
     <url-pattern>*.css</url-pattern>
     <url-pattern>*.js</url-pattern>
   </servlet-mapping>
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>todo_diary</display-name>
 </web-app>
 
 

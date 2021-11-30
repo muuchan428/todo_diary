@@ -10,28 +10,22 @@
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
-          <c:if test="${flush != null}">
-            <div id="flush_success">
-                <c:out value="${flush}"></c:out>
-            </div>
-        </c:if>
-
         <h2>USER SETTING</h2>
-            <p>
+            <p id="user_edit">
                 <a href="<c:url value='?action=${actUsr}&command=${commEdt}'/>">EDIT</a>
             </p>
-        <table>
+        <table id="user_data">
             <tbody>
                 <tr>
-                    <th>NAME</th>
+                    <th class="name">Name</th>
                     <td><c:out value="${user.name}"/></td>
                 </tr>
                 <tr>
-                    <th>ID</th>
+                    <th class="id">ID</th>
                     <td><c:out value="${user.userId}"/></td>
                 </tr>
                 <tr>
-                    <th>最終更新</th>
+                    <th class="time">Last updated</th>
                     <fmt:parseDate value="${user.updatedAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="updateDay" type="date" />
                     <td><fmt:formatDate value="${updateDay}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                 </tr>

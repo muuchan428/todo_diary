@@ -7,7 +7,7 @@
 <c:set var="commcreate" value="${ForwardConst.CMD_CREATE.getValue()}" />
 
 <c:if test="${errors != null}">
-    <div id="flush_error">
+    <div id="flash_error">
         入力内容にエラーがあります。<br />
         <c:forEach var="error" items="${errors}">
             ・<c:out value="${error}" /><br />
@@ -15,7 +15,7 @@
 
     </div>
 </c:if>
-<label for="${AttributeConst.USR_USR_ID.getValue()}">ID</label><br />
+<label for="${AttributeConst.USR_USR_ID.getValue()}">LOGIN ID</label><br />
 <input type="text" name="${AttributeConst.USR_USR_ID.getValue()}" value="${user.userId}" />
 <br /><br />
 
@@ -28,4 +28,3 @@
 <br /><br />
 <input type="hidden" name="${AttributeConst.USR_ID.getValue()}" value="${user.id}" />
 <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-<button type="submit">登録する</button>

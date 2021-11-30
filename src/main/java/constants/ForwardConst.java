@@ -33,7 +33,6 @@ public enum ForwardConst {
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
-    FW_ERR_TSK("error/tasksError"),
     FW_TOP_INDEX("topPage/index"),
     FW_LOGIN("login/login"),
     FW_USR_INDEX("users/index"),

@@ -2,15 +2,17 @@ package actions;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 import javax.servlet.ServletException;
 
 
 import actions.views.DiaryView;
-
+import actions.views.TaskView;
 import actions.views.UserView;
 import services.DiaryService;
+import services.TaskService;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
@@ -20,6 +22,7 @@ import constants.MessageConst;
 public class DiaryAction extends ActionBase {
 
     private DiaryService diaryService;
+    private TaskService taskService;
     private UserView loginUser;
    /**
      * メソッドを実行する
@@ -28,34 +31,37 @@ public class DiaryAction extends ActionBase {
     public void process() throws ServletException, IOException {
 
         diaryService =new DiaryService();
+        taskService = new TaskService();
 
         //メソッドを実行
         invoke();
         diaryService.close();
+        taskService.close();
     }
     /**
-     * 日記一覧を表示する
+     * 日記が書かれた月一覧を表示する
      * @throws ServletException
      * @throws IOException
      */
     public void index() throws ServletException, IOException {
 
-        //セッションからログイン中の従業員情報を取得
+        //セッションからログイン中のユーザー情報を取得
         loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USR);
         int page = getPage();
-        List<LocalDate> dates = diaryService.getDates(loginUser, page);
-        int dateCount = diaryService.getAllDate(loginUser);
+        List<YearMonth> months = diaryService.getAllMonths(loginUser, taskService.getMonths(loginUser),page
+                );
+        int diaryCount = diaryService.getMonthNum(loginUser);
 
-        putRequestScope(AttributeConst.DATES, dates);//日記が作成された日付のリスト
-        putRequestScope(AttributeConst.DATE_COUNT, dateCount); //日記の作成された日付の件数
+        putRequestScope(AttributeConst.MONTHS, months);//日記, タスクが作成された年月のリスト
+        putRequestScope(AttributeConst.MONTH_COUNT, diaryCount); //日記,タスクの作成された年月の件数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-        String flush = getSessionScope(AttributeConst.FLUSH);
+        String flush = getSessionScope(AttributeConst.FLASH);
         if (flush != null) {
-            putRequestScope(AttributeConst.FLUSH, flush);
-            removeSessionScope(AttributeConst.FLUSH);
+            putRequestScope(AttributeConst.FLASH, flush);
+            removeSessionScope(AttributeConst.FLASH);
         }
         //一覧画面を表示
         forward(ForwardConst.FW_DIA_INDEX);
@@ -85,26 +91,31 @@ public class DiaryAction extends ActionBase {
      */
     public void show() throws ServletException, IOException {
 
-
+         System.out.println("show");
         //セッションからログイン中のユーザー情報を取得
         UserView loginUser = (UserView)getSessionScope(AttributeConst.LOGIN_USR);
 
         //リクエストパラメータから日付を取得
-        LocalDate date =  LocalDate.parse(getRequestParam(AttributeConst.DATE));
-    //idを条件に日記データを取得する
-    List<DiaryView> diaries = diaryService.getCreatedAtDate(loginUser, date);
+        YearMonth month = getMonth();
+    //idを条件に日記,タスクデータを取得する
+    List<DiaryView> diaries = diaryService.getCreatedAtMonth(loginUser, month);
+    List<TaskView> tasks = taskService.getCreatedAtMonth(loginUser, month);
+
+    List<LocalDate> dates = diaryService.getDates(loginUser, taskService.getDates(loginUser, month), month);
 
 
     putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
     putRequestScope(AttributeConst.LOGIN_USR,loginUser);//ログインしている従業員情報
     putRequestScope(AttributeConst.DIARIES, diaries); //取得した日記リスト
-    putRequestScope(AttributeConst.DATE, date);
+    putRequestScope(AttributeConst.TASKS,tasks);//タスクのリスト
+    putRequestScope(AttributeConst.MONTH, month);//
+    putRequestScope(AttributeConst.DATES,dates);//日付のリスト
 
     //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-    String flush = getSessionScope(AttributeConst.FLUSH);
-    if (flush != null) {
-        putRequestScope(AttributeConst.FLUSH, flush);
-        removeSessionScope(AttributeConst.FLUSH);
+    String flash = getSessionScope(AttributeConst.FLASH);
+    if (flash != null) {
+        putRequestScope(AttributeConst.FLASH, flash);
+        removeSessionScope(AttributeConst.FLASH);
     }
 
     //詳細画面を表示
@@ -123,7 +134,7 @@ public class DiaryAction extends ActionBase {
         if(checkUser()) {
 
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-            putRequestScope(AttributeConst.DIARY, diary);//入力された日報情報
+            putRequestScope(AttributeConst.DIARY, diary);//入力された日記情報
 
             //詳細画面を表示
             forward(ForwardConst.FW_DIA_EDIT);
@@ -179,7 +190,7 @@ public class DiaryAction extends ActionBase {
                 //登録中にエラーがなかった場合
 
                 //セッションに登録完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+                putSessionScope(AttributeConst.FLASH, MessageConst.I_REGISTERED.getMessage());
 
                 //一覧画面にリダイレクト
                 redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_INDEX);
@@ -216,12 +227,12 @@ public class DiaryAction extends ActionBase {
                 forward(ForwardConst.FW_DIA_EDIT);
             } else {
                 //更新中にエラーがなかった場合
-
+                YearMonth date = YearMonth.of(dv.getDiaryDate().getYear(),dv.getDiaryDate().getMonthValue());
                 //セッションに更新完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+                putSessionScope(AttributeConst.FLASH, MessageConst.I_UPDATED.getMessage());
 
                 //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_SHOW, dv.getDiaryDate());
+                redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_SHOW, date);
 
             }
         }
@@ -232,18 +243,15 @@ public class DiaryAction extends ActionBase {
      * @throws IOException
      */
     public void destroy() throws ServletException, IOException {
-        System.out.println("destroy");
         //セッションからログイン中の従業員情報を取得
         loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USR);
 
-        System.out.println(getTokenId() + " " + getRequestParam(AttributeConst.TOKEN));
         //CSRF対策 tokenのチェック
         if (checkToken() && checkUser()) {
-            System.out.println("check ok");
             //idを条件に日記を削除する
             diaryService.destroy(toNumber(getRequestParam(AttributeConst.DIA_ID)));
             //セッションに削除完了のフラッシュメッセージを設定
-            putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+            putSessionScope(AttributeConst.FLASH, MessageConst.I_DELETED.getMessage());
 
             //一覧画面にリダイレクト
             redirect(ForwardConst.ACT_DIA, ForwardConst.CMD_INDEX);

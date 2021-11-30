@@ -10,6 +10,8 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.MessageConst;
 import constants.PropertyConst;
+import services.DiaryService;
+import services.TaskService;
 /**
  *
  * ユーザーにかかわる処理を行うActionクラス
@@ -19,6 +21,8 @@ import services.UserService;
 
 public class UserAction extends ActionBase {
         private UserService userService;
+        private DiaryService diaryService;
+        private TaskService taskService;
 
         /**
          *
@@ -26,10 +30,15 @@ public class UserAction extends ActionBase {
         @Override
         public void process() throws ServletException, IOException {
             userService = new UserService();
+            diaryService = new DiaryService();
+            taskService = new TaskService();
+
             //メソッドを実行
             invoke();
 
           userService.close();
+          diaryService.close();
+          taskService.close();
         }
 
         public void entryNew() throws ServletException, IOException {
@@ -82,7 +91,6 @@ public class UserAction extends ActionBase {
 
                         uv =  userService.findOne(getRequestParam(AttributeConst.USR_USR_ID), getRequestParam(AttributeConst.USR_PASS), pepper);//登録されたユーザー情報の取得
                        System.out.println(uv.getId());
-                        putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());//セッションに登録完了のフラッシュメッセージを設定
                         putSessionScope(AttributeConst.LOGIN_USR, uv); //入力されたユーザー情報
 
                         redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
@@ -162,7 +170,7 @@ public class UserAction extends ActionBase {
 
                     uv =  userService.findOne(toNumber(getRequestParam(AttributeConst.USR_ID)));
                     //セッションに更新完了のフラッシュメッセージを設定
-                    putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+                    putSessionScope(AttributeConst.FLASH, MessageConst.I_UPDATED.getMessage());
 
                     //セッションからログインユーザーのパラメータを削除
                     removeSessionScope(AttributeConst.LOGIN_USR);
@@ -184,15 +192,26 @@ public class UserAction extends ActionBase {
             //CSRF対策 tokenのチェック
             if (checkToken()) {
 
-                //idを条件にアカウントを削除する
-                userService.destroy(toNumber(getRequestParam(AttributeConst.USR_ID)));
+                //セッションからログイン中のユーザー情報を取得
+                UserView loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USR);
+
+                //タスク、日記を削除する
+                diaryService.destroyAll(loginUser);
+                taskService.destroyAll(loginUser);
+               if(diaryService.countAllMine(loginUser) == 0 && taskService.countAllMine(loginUser) == 0) {
+
+                  userService.destroy(toNumber(getRequestParam(AttributeConst.USR_ID)));
+               }else {
+                   forward(ForwardConst.FW_ERR_UNKNOWN);
+               }
+
                 //セッションからログインユーザーのパラメータを削除
                 removeSessionScope(AttributeConst.LOGIN_USR);
                 //セッションに削除完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+                putSessionScope(AttributeConst.FLASH, MessageConst.I_DELETED.getMessage());
 
                 //ログイン画面の表示
-                forward(ForwardConst.FW_LOGIN);
+                redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_INDEX);
             }
         }
 

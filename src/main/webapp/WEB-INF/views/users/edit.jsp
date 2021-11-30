@@ -13,13 +13,14 @@
 
     <h2>USER EDIT</h2>
 
-        <form method="POST"
+        <form id="form" method="POST"
             action="<c:url value='?action=${action}&command=${commUpd}' />">
             <c:import url="_form.jsp" />
+            <button type="submit">Update</button>
         </form>
 
-        <p>
-            <a href="#" id="destroy" onclick="confirmDestroy();">アカウント削除</a>
+        <p id="user_delete">
+            <a href="#" id="destroy" onclick="confirmDestroy();">Delete account</a>
         </p>
         <form method="POST"
             action="<c:url value='?action=${action}&command=${commDel}' />">
@@ -28,7 +29,7 @@
         </form>
         <script>
             function confirmDestroy() {
-                if (confirm("アカウントの削除を行います。よろしいですか？")) {
+                if (confirm("アカウントの削除をすると元に戻すことはできません。よろしいですか？")) {
                     document.forms[1].submit();
                 }
             }

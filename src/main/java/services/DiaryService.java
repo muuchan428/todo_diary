@@ -15,7 +15,6 @@ import actions.views.DiaryView;
 
 import constants.JpaConst;
 import models.Diary;
-import models.Task;
 import models.validators.DiaryValidator;
 /**
  *
